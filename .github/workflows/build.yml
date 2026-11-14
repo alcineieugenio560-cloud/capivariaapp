@@ -15,6 +15,13 @@ jobs:
           D=$(dirname "$(find . -name settings.gradle.kts -not -path './.git/*' | head -1)")
           echo "Projeto encontrado em: $D"
           echo "dir=$D" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Gerar icone com a logo da Capivaria
+        run: |
+          pip install pillow
+          python3 "${{ steps.p.outputs.dir }}/tools/make_icons.py" "${{ steps.p.outputs.dir }}/app/src/main/res"
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
